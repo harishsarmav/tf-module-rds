@@ -44,10 +44,10 @@ resource "aws_rds_cluster" "rds" {
   iops                      = 1000
   master_username           = data.aws_ssm_parameter.DB_ADMIN_USER.value
   master_password           = data.aws_ssm_parameter.DB_ADMIN_PASS.value
-  db_subnet_group_name      = aws.db.subnet_group.name
+  db_subnet_group_name      = aws_db_subnet_group.default.name
   vpc_security_group_ids    = [aws_security_group.rds.id]
   storage_encrypted         = true
-  kms_key_id                = data.aws_kms_key.key
+  kms_key_id                = data.aws_kms_key.key.arn
 
   tags = merge(
     local.common_tags,
